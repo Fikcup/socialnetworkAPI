@@ -49,6 +49,24 @@ const thoughtController = {
                 res.status(500).json(err);
             });
     },
+    updateThought(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
+        .then((thoughtData) => {
+            if (!thoughtData) {
+                return res.status(404).json({ message: 'No thought exists with this id!' });
+            }
+
+            res.json(thoughtData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+    },
     deleteThought(req, res) {
         Thought.findOneAndRemove(
             { _id: req.params.thoughtId }
