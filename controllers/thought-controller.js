@@ -20,7 +20,17 @@ const thoughtController = {
                 console.log(err);
                 res.status(500).json(err);
             });
-    }
+    },
+    createThought(req, res) {
+        Thought.create(req.body)
+            .then((thoughtData) => {
+                res.json(thoughtData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    },
 }
 
 module.exports = thoughtController;
