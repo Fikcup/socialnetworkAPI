@@ -10,6 +10,16 @@ const thoughtController = {
                 console.log(err);
                 res.status(500).json(err);
             });
+    },
+    getOneThought(req, res) {
+        Thought.findOne()
+            .then((thoughtData) => {
+                res.json(thoughtData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+            });
     }
 }
 
