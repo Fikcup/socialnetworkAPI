@@ -1,4 +1,5 @@
 const { Schema, Types } = require('mongoose');
+const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
     {
@@ -11,16 +12,24 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            // add jquery getter method to format date
         },
         username: {
             type: String,
             required: true,
         },
-        // Import reaction schema as a sub array
-        reactions: [Reaction]
+        reactions: [reactionSchema]
+    },
+    {
+        toJSON: {
+            virtuals: true
+        },
+        id: false,
     }
 )
+
+thoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+});
 
 const Thought = model('Thought', thoughtSchema);
 

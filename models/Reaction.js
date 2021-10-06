@@ -18,11 +18,8 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date,
             default: () => Date.now(),
-            // getter timestamp query
         }
     }
 )
 
-const Reaction = model ('Reaction', reactionSchema);
-
-module.exports = Reaction;
+module.exports = reactionSchema;
