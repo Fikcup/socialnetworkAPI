@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User, Thought, Reaction } = require('../models');
 
 const thoughtController = {
     getAllThoughts(req, res) {
@@ -82,6 +82,24 @@ const thoughtController = {
                 console.log(err);
                 res.status(500).json(err);
             })
+    },
+    createReaction(req, res) {
+       Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: req.params.reactionId } },
+            { runValidators: true, new: true }
+        )
+            .then((thoughtData) => {
+                if (!thoughtData) {
+                    return res.status(404).json({ message: 'No thought exists with this id!' });
+                }
+
+                res.json(thoughtData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+            });
     }
 }
 
