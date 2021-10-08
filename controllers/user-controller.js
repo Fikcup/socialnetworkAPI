@@ -3,6 +3,7 @@ const { User, Thought } = require('../models');
 const userController = {
     getAllUsers(req, res) {
         User.find()
+            .select('-__v')
             .then((userData) => {
                 res.json(userData);
             })
@@ -13,6 +14,9 @@ const userController = {
     },
     getSingleUser(req, res) {
         User.findOne()
+            .select('-__v')
+            .populate('friends')
+            .populate('thoughts')
             .then((userData) => {
                 res.json(userData);
             })
@@ -57,6 +61,9 @@ const userController = {
                     return res.status(404).json({ message: 'No user exists with this id!' });
                 }
 
+                return Thought.deleteMany({ _id: { $in: userData.thoughts } });
+            })
+            .then(() => {
                 res.json({ message: 'User has been deleted' });
             })
             .catch((err) => {
@@ -64,6 +71,24 @@ const userController = {
                 res.status(500).json(err);
             })
             
+    },
+    createFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $push: { friends: req.params.friendId } },
+            { new: true }
+        )
+            .then((userData) => {
+                if (!userData) {
+                    return res.status(404).json({ message: 'No user exists with this id!' });
+                }
+
+                res.json(userData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+            })
     }
 }
 
