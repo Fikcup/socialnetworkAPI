@@ -1,4 +1,12 @@
 {
+  "name": "socialnetworkapi",
+  "version": "1.0.0",
+  "description": "A REST API utilizing mongoose to interact with a MongoDB database",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fikcup/socialnetworkAPI.git"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^6.0.9"
