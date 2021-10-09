@@ -15,7 +15,7 @@
 ## About The Project
 
 ![Social Network API Screenshot](./assets/socialNetworkAPI.PNG)<br />
-Walkthrough: [Social Network API walkthrough video]()
+Walkthrough: [Social Network API walkthrough video](https://youtu.be/613EqxV_-28)
 
 
 ### Built With
